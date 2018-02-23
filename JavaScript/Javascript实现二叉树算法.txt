@@ -1,5 +1,5 @@
 慕课网课程地址：https://www.imooc.com/learn/888
-示例代码：https://github.com/rehellinen/Study-and-Exercise/tree/master/JavaScript/algorithm
+示例代码：github.com/rehellinen/Study-and-Exercise/tree/master/JavaScript/algorithm
 
 排序二叉树
 1. 什么是二叉树
@@ -12,5 +12,16 @@
 2. 排序二叉树的特点
 左孩子的值小于父亲节点
 右孩子的值则大于父亲节点
+
+3. 关于遍历
+（1）前序遍历（DLR），首先访问根结点，然后遍历左子树，最后遍历右子树。简记根-左-右。
+
+
+
+（2）中序遍历（LDR），首先遍历左子树，然后访问根结点，最后遍历右子树。简记左-根-右。
+
+
+
+（3）后序遍历（LRD），首先遍历左子树，然后遍历右子树，最后访问根结点。简记左-右-根。
 
 
