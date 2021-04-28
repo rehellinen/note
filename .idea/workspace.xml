@@ -20,10 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d697a873-a194-44c6-86d9-c9276a73b975" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/JavaScript/Javascript实现二叉树算法.txt" beforeDir="false" afterPath="$PROJECT_DIR$/draft/Javascript实现二叉树算法.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaScript/jsonp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/draft/jsonp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaScript/js基础.txt" beforeDir="false" afterPath="$PROJECT_DIR$/draft/js基础.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/css预处理程序.txt" beforeDir="false" afterPath="$PROJECT_DIR$/draft/css预处理程序.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaScript/event_loop.MD" beforeDir="false" afterPath="$PROJECT_DIR$/JavaScript/event_loop.MD" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619605997543</updated>
-      <workItem from="1619605998797" duration="2133000" />
+      <workItem from="1619605998797" duration="2173000" />
     </task>
     <servers />
   </component>

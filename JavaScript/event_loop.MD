@@ -1,5 +1,6 @@
 #### 参考文章
 1. https://zhuanlan.zhihu.com/p/35039878
+2. https://zhuanlan.zhihu.com/p/35918797
 
 #### 浏览器事件循环：
 同步任务执行完之后，会把所有micro task执行完，接着执行一个macro task
