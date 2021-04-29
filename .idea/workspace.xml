@@ -21,7 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d697a873-a194-44c6-86d9-c9276a73b975" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue.js/compiler(part-one).MD" beforeDir="false" afterPath="$PROJECT_DIR$/Vue.js/compiler(part-one).MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Node.js/cluster.MD" beforeDir="false" afterPath="$PROJECT_DIR$/Node.js/cluster.MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,11 +55,12 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Node.js/images" />
+      <recent name="$PROJECT_DIR$/draft" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Vue.js" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/draft" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -71,7 +73,7 @@
       <updated>1619605997543</updated>
       <workItem from="1619605998797" duration="8112000" />
       <workItem from="1619683615337" duration="871000" />
-      <workItem from="1619684507772" duration="7254000" />
+      <workItem from="1619684507772" duration="9742000" />
     </task>
     <servers />
   </component>
