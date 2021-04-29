@@ -10,6 +10,7 @@
 It is a hierarchical program representation that presents source code structure according to the grammar of a programming language, each AST node corresponds to an item of a source code.
 
 简单来说，就是用一个对象去描述一段代码
+![AST示例](./images/compiler@ast.png)
 
 
 ### 整体流程介绍
