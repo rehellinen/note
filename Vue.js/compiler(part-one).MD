@@ -6,12 +6,18 @@
 
 这篇文章将分析第一步：解析模板并生成AST
 
+### 什么是AST？
+It is a hierarchical program representation that presents source code structure according to the grammar of a programming language, each AST node corresponds to an item of a source code.
+
+简单来说，就是用一个对象去描述一段代码
+
+
 ### 整体流程介绍
-整体流程确实很简单，首先会有一些前置处理，比如对参数进行处理、对模板进行缓存、判断new Function()是否可用等。
-然后调用parseHTML方法进行模板解析，传入一些配置项以及一些生命周期函数（start、end、chars、comment）。
+整体流程其实很简单，首先会有一些前置处理，比如对参数进行处理、对模板进行缓存、判断new Function()是否可用等。
+然后调用parseHTML方法进行模板解析，将传入一些配置项以及一些生命周期函数（start、end、chars、comment）。
 这些生命周期函数都是用来生成AST的，将会在解析模板的过程中被调用。
 在Vue.js源码中，生命周期的编码技巧频繁有用到，可以很好地将不同功能的实现分离开来，利于维护。
-比如在这个case，就很好地将AST的生成与模板解析两个功能的实现进行了分离。
+比如在这个case，就很好地将生成AST与模板解析两个不同功能的代码实现进行了分离。
 ```
 源码文件路径：src/compiler/parser/index.js
 import { parseHTML } from './html-parser'
@@ -35,19 +41,22 @@ parseHTML(template, {
 
 
 ### 解析template
-其实是一个while循环，从前到后不停地用正则表达式去匹配模板的一部分，匹配成功后将针对不同的情况做不同的处理。  
+调用parseHTML方法进行模板解析，其核心是一个while循环，每次循环都从前到后地使用正则表达式去匹配模板的一部分，匹配成功后将针对不同的情况做不同的处理。  
 
 #### 举个例子
-比如说有有一段模板`<div><p v-if="flag">123</p></div>`，解析过程将是：
+比如说有有一段模板`<div><p v-if="flag">123</p></div>`，解析步骤将是：
 1. `<div>`
-2. `<p v-if=”flag”>`，注意：类似v-if="flag"的template attr将会被单独处理
+2. `<p v-if=”flag”>`，注意：类似v-if="flag"的属性将会被单独处理
 3. `123`
 4. `</p>`
 5. `</div>`
 
 
 #### 正则表达式：
+此处不做正则的具体介绍，大家有兴趣可以自己研究一下。
 ```
+源码文件路径：src/compiler/parser/html-parser.js
+
 export const unicodeRegExp = /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/
 const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/
 const dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+?\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/
@@ -61,8 +70,10 @@ const comment = /^<!\--/
 const conditionalComment = /^<!\[/
 ```
 
-#### HTML Parser精简版源码
+#### parseHTML方法的精简版源码
 ```
+源码文件路径：src/compiler/parser/html-parser.js
+
 const stack = []
 let index = 0 // 当前解析到的位置的索引（相对于原始的模板字符串）
 let last // 上一次进入循环时的模板字符串
@@ -106,8 +117,8 @@ while (html /* 需要解析的模板字符串 */) {
 
 #### 注释、Doctype  
 当匹配到注释节点时，做的事情很简单。
-首先会调用options.comment去生成AST（生成AST的过程将在后面详细介绍，此处暂时先不谈），然后再调用advance方法去截断模板。  
-当匹配到Conditional Comment或者Doctype就更简单了，直接调用advance方法去截断模板。
+首先会调用options.comment去生成AST（生成AST的过程将在后面详细介绍，此处暂时先不谈），然后再调用advance方法（下面有advance方法的介绍）去截断模板。  
+当匹配到Conditional Comment或者Doctype就更简单了，直接调用advance方法去截断模板，除此之外没有其他操作了。
 ```
 // Comment:
 if (comment.test(html)) {
@@ -137,7 +148,7 @@ if (doctypeMatch) {
 }
 ```
 
-关于advance方法：其实就是去增加一些index，然后对html变量做截断
+关于advance方法：其实就是修改了index变量的值，然后对html变量做截断。
 ```
 function advance (n) {
   index += n
@@ -146,7 +157,7 @@ function advance (n) {
 ```
 
 #### 开始标签
-首先调用parseStartTag方法，如果parseStartTag方法返回值不为空则会调用handleStartTag方法。
+整体流程是：首先调用parseStartTag方法，如果parseStartTag方法返回值不为空则会调用handleStartTag方法。  
 parseStartTag方法做的事情其实很简单，就是使用正则表达式去获取开始标签及其所有属性，最终返回一个对象，对象有tagName、attrs、start、end四个属性。  
 handleStartTag方法首先会做些容错处理、
 然后将attr处理成{ name: '', value: '' }的形式，增强可读性、
@@ -235,7 +246,7 @@ function handleStartTag (match) {
 
 #### 结束标签
 当匹配到结束标签，首先调用advance方法，然后调用parseEndTag方法。
-parseEndTag方法一眼看上去很复杂，有一些是兼容处理，最重要的两件事情是：
+parseEndTag方法一眼看上去很复杂，但是实际上有很多都是兼容处理，可以先不考虑，parseEndTag方法做的最重要的两件事情是：
 1. 通过stack判断标签嵌套是否合法
 2. 调用options.end（AST相关）
 ```
@@ -300,11 +311,13 @@ function parseEndTag (tagName, start, end) {
 ```
 
 #### 文本
+当`textEnd >= 0`，则视为文本。
+注意，此处出现的while循环是为了解决文本中出现'<'的情况，如：`<p>123<456</p>`，保证能匹配到完整的文本。
+当`textEnd < 0`，即找不到'<'，则将整段Tpl视为纯文本。  
+最后，会调用advance方法以及options.chars生成AST。
 ```
-// 当textEnd >= 0，则视为文本。
 if (textEnd >= 0) {
   rest = html.slice(textEnd)
-  // 此处循环是为了解决文本中出现'<'的情况，如：<p>123<456</p>，保证能匹配到完整的文本
   while (
     !endTag.test(rest) &&
     !startTagOpen.test(rest) &&
@@ -319,7 +332,6 @@ if (textEnd >= 0) {
   }
   text = html.substring(0, textEnd)
 }
-// 找不到'<'，整段Tpl视为纯文本
 if (textEnd < 0) {
   text = html
 }
