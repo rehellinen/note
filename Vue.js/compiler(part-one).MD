@@ -4,7 +4,7 @@
 2. AST优化
 3. 根据AST生成Render函数
 
-这篇文章将分析第一步：解析模板并生成AST
+这篇文章将分析第一步：解析模板并生成AST中的第一步：解析模板
 
 ### 什么是AST？
 It is a hierarchical program representation that presents source code structure according to the grammar of a programming language, each AST node corresponds to an item of a source code.
